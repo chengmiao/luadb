@@ -1,0 +1,10 @@
+[submodule "opt/fmt"]
+	path = opt/fmt
+	url = https://github.com/fmtlib/fmt.git
+[submodule "opt/mysql-connector-cpp"]
+	path = opt/mysql-connector-cpp
+	url = https://github.com/mysql/mysql-connector-cpp.git
+	branch = 1.1
+[submodule "opt/googletest"]
+	path = opt/googletest
+	url = https://github.com/google/googletest.git
