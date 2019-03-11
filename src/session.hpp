@@ -46,7 +46,7 @@ private:
             if (!ec)
             {
                 int32_t index = 2;
-                MysqlPool::Instance()->getIOContext(index)->post([&m_luaState, this, self, length, index](){
+                MysqlPool::Instance()->getIOContext(index)->post([this, self, length, index](){
                     m_luaState->set("lua_index", index);
                     m_luaState->set("lua_recv_data", std::string(data_, length));
                     m_luaState->script_file("/script/db.lua");

@@ -62,7 +62,7 @@ public:
     }
 
     std::shared_ptr<gdp::db::GDb>
-    GetDialogBaseUnits(int32_t index)
+    getDB(int32_t index)
     {
         if (index >= m_ioContextArrary.size())
         {
