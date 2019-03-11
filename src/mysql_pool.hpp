@@ -62,7 +62,7 @@ public:
         return;
     }
 
-    void DBGet(int32_t index, gdp::db::DBQueue queue)
+    void DBGet(int32_t index, const std::string sql)
     {
         if (index >= m_ioContextArrary.size())
         {
