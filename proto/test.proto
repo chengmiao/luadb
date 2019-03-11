@@ -1,0 +1,12 @@
+syntax="proto3";
+package luadb;
+
+message MsgHead{
+  string proto = 1;
+  bytes   data = 2;
+}
+
+message CreateRoleReq{
+  int64 player_id = 1;
+  int64 uid       = 2;
+}

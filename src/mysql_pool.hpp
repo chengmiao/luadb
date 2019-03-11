@@ -1,7 +1,9 @@
+#pragma once
 #include "asio.hpp"
 #include "gdb.hpp"
+#include "singleton.h"
 
-class MysqlPool
+class MysqlPool : public Singleton <MysqlPool>
 {
 public:
     void init()
@@ -11,8 +13,6 @@ public:
         m_ioContextArrary.resize(m_threadNum, nullptr);
         m_threadArrary.resize(m_threadNum, nullptr);
         m_pDBArray.resize(m_threadNum, nullptr);
-
-        // mysql_library_init(0, NULL, NULL);
 
         for (auto i = 0; i < m_threadNum; ++i)
         {
@@ -48,6 +48,32 @@ public:
             m_threadArrary.at(i) = thr;
         }
     }
+
+    
+    void Post(int32_t index, std::function<void()> f)
+    {
+        if (index >= m_ioContextArrary.size())
+        {
+            return;
+        }
+
+        m_ioContextArrary[index]->post(f);
+
+        return;
+    }
+
+    void DBGet(int32_t index, gdp::db::DBQueue queue)
+    {
+        if (index >= m_ioContextArrary.size())
+        {
+            return;
+        }
+
+        m_pDBArray[index]->get(queue);
+
+        return;
+    }
+
 
 private:
     std::vector<std::shared_ptr<asio::io_context>> m_ioContextArrary;

@@ -1,4 +1,8 @@
+#pragma once
+
 #include "asio.hpp"
+#include "sol.hpp"
+#include "mysql_pool.hpp"
 
 using asio::ip::tcp;
 
@@ -10,6 +14,17 @@ public:
 
     void Start()
     {
+        m_luaState = std::make_shared<sol::state>();
+        m_luaState->open_libraries();
+
+        m_luaState["pool"] = *(MysqlPool::Instance());
+        m_luaState->new_usertype<MysqlPool>( "pool",
+            sol::constructors<MysqlPool()>(),
+            // typical member function
+            "post", &MysqlPool::Post,
+            "getDB", &MysqlPool::DBGet
+        );
+
         do_read();
     }
 
@@ -22,7 +37,9 @@ private:
         {
             if (!ec)
             {
-                do_write(length);
+                m_luaState["recv_data"] = std::string(data_, length);
+                m_luaState->script_file("/script/db.lua");
+                //do_write(length);
             }
         });
     }
@@ -44,4 +61,5 @@ private:
     tcp::socket socket_;
     enum { max_length = 1024 };
     char data_[max_length];
+    std::shared_ptr<sol::state> m_luaState;
 };
