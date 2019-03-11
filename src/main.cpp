@@ -9,9 +9,9 @@ int main(int argc, char* argv[])
 {
     try
     {
-        if (argc != 3)
+        if (argc != 2)
         {
-            std::cerr << "Usage: " << argv[0] << " <ip>" << " <port>" << std::endl;
+            std::cerr << "Usage: " << argv[0] << " <port>" << std::endl;
             return 1; 
         }
 

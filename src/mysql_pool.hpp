@@ -16,7 +16,7 @@ public:
 
         for (auto i = 0; i < m_threadNum; ++i)
         {
-            m_pDBArray.at(i) = std::make_shared<gdp::db::GDb>("host", 8080, "username", "password");
+            m_pDBArray.at(i) = std::make_shared<gdp::db::GDb>();
             auto result = m_pDBArray.at(i)->init("database_name");
 
             if (result.resultVal != 0)
@@ -50,28 +50,26 @@ public:
     }
 
     
-    void Post(int32_t index, std::function<void()> f)
+    std::shared_ptr<asio::io_context>
+    getIOContext(int32_t index)
     {
         if (index >= m_ioContextArrary.size())
         {
-            return;
+            return nullptr;
         }
 
-        m_ioContextArrary[index]->post(f);
-
-        return;
+        return m_ioContextArrary[index];
     }
 
-    void DBGet(int32_t index, const std::string sql)
+    std::shared_ptr<gdp::db::GDb>
+    GetDialogBaseUnits(int32_t index)
     {
         if (index >= m_ioContextArrary.size())
         {
-            return;
+            return nullptr;
         }
 
-        m_pDBArray[index]->get(sql.c_str());
-
-        return;
+        return m_pDBArray[index];
     }
 
 

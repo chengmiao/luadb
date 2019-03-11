@@ -14,8 +14,9 @@ require "transpb"
 
 local handler_table = {}
 
-local lua_recv_data = recv_data
-local lua_db_pool = pool
+local index = lua_index
+local recv_data = lua_recv_data
+
 
 transpb:load_file("test.proto")
 registerHandler("luadb.CreateRoleReq", cbCreateRoleReq)

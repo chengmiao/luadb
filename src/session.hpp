@@ -17,13 +17,21 @@ public:
         m_luaState = std::make_shared<sol::state>();
         m_luaState->open_libraries();
 
-        (*m_luaState)["pool"] = *(MysqlPool::Instance());
-        m_luaState->new_usertype<MysqlPool>( "pool",
-            sol::constructors<MysqlPool()>(),
+        //(*m_luaState)["pool"] = *(MysqlPool::Instance());
+        //m_luaState->new_usertype<MysqlPool>( "pool",
+            //sol::constructors<MysqlPool()>(),
             // typical member function
-            "post", &MysqlPool::Post,
-            "getDB", &MysqlPool::DBGet
-        );
+            //"post", &MysqlPool::Post,
+            //"getDB", &MysqlPool::DBGet
+        //);
+
+        m_luaState->set("get", [](int32_t index, std::string sql){
+            return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
+        });
+
+        //m_luaState->set("execute", [](int32_t index, gdp::db::DBQuery query){
+            //return MysqlPool::Instance()->getDB(index)->execute(query);
+        //});
 
         do_read();
     }
@@ -37,8 +45,13 @@ private:
         {
             if (!ec)
             {
-               (*m_luaState)["recv_data"] = std::string(data_, length);
-                m_luaState->script_file("/script/db.lua");
+                int32_t index = 2;
+                MysqlPool::Instance()->getIOContext(index)->post([&m_luaState, this, self, length, index](){
+                    m_luaState->set("lua_index", index);
+                    m_luaState->set("lua_recv_data", std::string(data_, length));
+                    m_luaState->script_file("/script/db.lua");
+                });
+
                 //do_write(length);
             }
         });
