@@ -26,6 +26,6 @@ ADD_LIBRARY(lua ${LIB_SRC})
 add_library(pb SHARED ${CMAKE_CURRENT_SOURCE_DIR}/lua-protobuf/pb.c)
 add_dependencies(pb lua)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/gdb)
+
 
 
