@@ -16,7 +16,9 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/opt/lua-protobuf
     ${CMAKE_SOURCE_DIR}/opt/asio/asio/include
     ${CMAKE_SOURCE_DIR}/opt/gdb/include
+    /usr/include
 )
+
 
 link_directories(
     ${CMAKE_SOURCE_DIR}/lib
