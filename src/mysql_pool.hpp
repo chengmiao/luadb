@@ -69,7 +69,7 @@ public:
             return;
         }
 
-        m_pDBArray[index]->get(queue);
+        m_pDBArray[index]->get(sql.c_str());
 
         return;
     }

@@ -17,7 +17,7 @@ public:
         m_luaState = std::make_shared<sol::state>();
         m_luaState->open_libraries();
 
-        m_luaState["pool"] = *(MysqlPool::Instance());
+        (*m_luaState)["pool"] = *(MysqlPool::Instance());
         m_luaState->new_usertype<MysqlPool>( "pool",
             sol::constructors<MysqlPool()>(),
             // typical member function
@@ -37,7 +37,7 @@ private:
         {
             if (!ec)
             {
-                m_luaState["recv_data"] = std::string(data_, length);
+               (*m_luaState)["recv_data"] = std::string(data_, length);
                 m_luaState->script_file("/script/db.lua");
                 //do_write(length);
             }
