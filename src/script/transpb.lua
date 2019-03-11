@@ -1,5 +1,5 @@
-package.path = package.path..';../opt/lua-protobuf/?.lua'
-package.cpath = package.cpath..';../lib/?.so'
+package.path = package.path..';../../opt/lua-protobuf/?.lua'
+package.cpath = package.cpath..';../../lib/?.so'
 
 transpb = {}
 
@@ -7,7 +7,7 @@ transpb.pb = require "pb"
 transpb.protoc = require "protoc"
 transpb.ser = require "serpent"
 
-transpb.protoc.paths[#transpb.protoc.paths + 1] = "../proto"
+transpb.protoc.paths[#transpb.protoc.paths + 1] = "../../proto"
 transpb.protoc.include_imports = true
 transpb.pb.option("enum_as_value")
 

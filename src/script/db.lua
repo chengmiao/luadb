@@ -1,5 +1,3 @@
-package.path = package.path..';/bin/?.lua'
-
 require "transpb"
 
 --[[
