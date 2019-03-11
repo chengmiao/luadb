@@ -16,7 +16,7 @@ public:
 
         for (auto i = 0; i < m_threadNum; ++i)
         {
-            m_pDBArray.at(i) = std::make_shared<gdp::db::GDb>("host", "port", "username", "password");
+            m_pDBArray.at(i) = std::make_shared<gdp::db::GDb>("host", 8080, "username", "password");
             auto result = m_pDBArray.at(i)->init("database_name");
 
             if (result.resultVal != 0)
