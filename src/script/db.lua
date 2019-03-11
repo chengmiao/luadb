@@ -39,6 +39,8 @@ end
 
 local function cbCreateRoleReq(real_data)
     local real_table = transpb:decode("luadb.CreateRoleReq", real_data)
+
+    local result_set = get(index, "select *")
 end
 
 
