@@ -7,6 +7,3 @@
 [submodule "opt/asio"]
 	path = opt/asio
 	url = https://github.com/chriskohlhoff/asio.git
-[submodule "opt/gdb"]
-	path = opt/gdb
-	url = https://github.com/chengmiao/gdb.git
