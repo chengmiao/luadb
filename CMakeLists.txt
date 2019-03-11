@@ -24,6 +24,7 @@ include_directories(
 
 link_directories(
     ${CMAKE_SOURCE_DIR}/lib
+    /usr/lib64/mysql
 )
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/opt)
