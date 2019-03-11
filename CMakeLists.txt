@@ -15,6 +15,9 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/opt/sol2
     ${CMAKE_SOURCE_DIR}/opt/lua-protobuf
     ${CMAKE_SOURCE_DIR}/opt/asio/asio/include
+    ${CMAKE_SOURCE_DIR}/opt/gdb/include
+    ${CMAKE_SOURCE_DIR}/opt/gdb/opt/mysql-connector-cpp
+    ${CMAKE_SOURCE_DIR}/opt/gdb/opt/fmt
 )
 
 link_directories(
