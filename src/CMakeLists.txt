@@ -9,5 +9,5 @@ file(GLOB CLIENT_HDRS ${CMAKE_SOURCE_DIR}/src/*.h ${CMAKE_SOURCE_DIR}/src/*.hpp)
 
 
 add_executable(main main.cpp ${CLIENT_HDRS} ${CLIENT_SRCS})
-target_link_libraries(main ${LUA_LIB})
+target_link_libraries(main ${LUA_LIB} mysqlclient)
 add_dependencies(main lua)
