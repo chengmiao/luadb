@@ -16,6 +16,8 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/opt/lua-protobuf
     ${CMAKE_SOURCE_DIR}/opt/asio/asio/include
     ${CMAKE_SOURCE_DIR}/opt/gdb/include
+    ${CMAKE_SOURCE_DIR}/opt/gdb/opt/fmt
+    ${CMAKE_SOURCE_DIR}/opt/gdb/opt/fmt/include
     /usr/include/mysql
 )
 
