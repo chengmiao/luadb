@@ -36,8 +36,9 @@ public:
             //{
                 //const std::string value = v;
                 vec.push_back("1234");
+                
             //}
-            sol::as_args(vec);
+            //sol::as_args(vec);
         });
 
         //m_luaState->set("execute", [](int32_t index, gdp::db::DBQuery query){
