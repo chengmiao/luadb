@@ -1,3 +1,5 @@
+package.path = package.path..';../src/script/?.lua'
+
 require "transpb"
 
 --[[

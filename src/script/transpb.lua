@@ -1,5 +1,5 @@
-package.path = package.path..';../../opt/lua-protobuf/?.lua'
-package.cpath = package.cpath..';../../lib/?.so'
+package.path = package.path..';../opt/lua-protobuf/?.lua'
+package.cpath = package.cpath..';../lib/?.so'
 
 transpb = {}
 
