@@ -43,6 +43,7 @@ public:
         {
             auto thr = std::make_shared<std::thread>([this, i](){
                 m_ioContextArrary.at(i)->run();
+                std::cout << "IOContext Run" << std::endl;
             });
 
             m_threadArrary.at(i) = thr;
