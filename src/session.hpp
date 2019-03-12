@@ -31,12 +31,12 @@ public:
 
         m_luaState->set("insert_into", [](){
             //gdp::db::DBQuery query;
-            std::vector<const std::string> vec;
+            std::vector<std::string> vec;
             //for (auto v : args)
             //{
                 //const std::string value = v;
                 vec.push_back("1234");
-                
+
             //}
             //sol::as_args(vec);
         });
