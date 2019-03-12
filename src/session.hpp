@@ -30,7 +30,7 @@ public:
         });
 
         m_luaState->set("insert_into", [](sol::variadic_args args){
-            //gdp::db::DBQuery query;
+            gdp::db::DBQuery query;
             std::vector<std::string> vec;
             for (auto v : args)
             {
@@ -38,7 +38,8 @@ public:
                 vec.push_back(v);
 
             }
-            sol::as_args(vec);
+            auto tmp = sol::as_args(vec);
+            query.insert_into("123", tmp);
         });
 
         //m_luaState->set("execute", [](int32_t index, gdp::db::DBQuery query){
