@@ -18,6 +18,10 @@ int main(int argc, char* argv[])
         // init mysql pool
         MysqlPool::Instance()->init();
 
+        MysqlPool::Instance()->getIOContext(1)->post([](){
+                    std::cout << "Asio Post" << std::endl;
+                });
+
         // init listen server
         asio::io_context io_context;
         Server s(io_context, std::atoi(argv[1]));
