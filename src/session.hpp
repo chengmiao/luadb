@@ -29,7 +29,7 @@ public:
             return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
         });
 
-        m_luaState->set_function("my_print", [](sol::variadic_args args) {
+        m_luaState->set_function("my_print", [this](sol::variadic_args args) {
             (*m_luaState)["print"](args);
         });
 
