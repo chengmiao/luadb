@@ -29,19 +29,11 @@ public:
             return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
         });
 
-        m_luaState->set("insert_into", [](sol::variadic_args args){
-            gdp::db::DBQuery query;
-            std::vector<std::string> vec;
-            for (auto v : args)
-            {
-                std::string value = v;
-                vec.push_back(v);
-
-            }
-            auto tmp = sol::as_args(vec);
-            query.insert_into("123", tmp);
+        m_luaState->set_function("my_print", [](sol::variadic_args args) {
+            lua["print"](args);
         });
 
+        lua.script("my_print(1, 2, 3)");
         //m_luaState->set("execute", [](int32_t index, gdp::db::DBQuery query){
             //return MysqlPool::Instance()->getDB(index)->execute(query);
         //});
