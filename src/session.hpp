@@ -30,13 +30,13 @@ public:
         });
 
         m_luaState->set("insert_into", [](sol::variadic_args args){
-            gdp::db::DBQuery query;
+            //gdp::db::DBQuery query;
             std::vector<const std::string> vec;
-            for (auto v : args)
-            {
-                const std::string value = v;
-                vec.push_back(value);
-            }
+            //for (auto v : args)
+            //{
+                //const std::string value = v;
+                vec.push_back("1234");
+            //}
             sol::as_args(vec);
         });
 
