@@ -33,6 +33,10 @@ public:
             //return MysqlPool::Instance()->getDB(index)->execute(query);
         //});
 
+        MysqlPool::Instance()->getIOContext(index)->post([](){
+                    std::cout << "Asio Post" << std::endl;
+                });
+
         do_read();
     }
 
@@ -55,10 +59,6 @@ private:
                     //m_luaState->set("lua_recv_data", std::string(data_, length));
                     //m_luaState->script_file("/script/db.lua");
                 //});
-
-                MysqlPool::Instance()->getIOContext(index)->post([](){
-                    std::cout << "Asio Post" << std::endl;
-                });
 
                 //do_write(length);
             }
