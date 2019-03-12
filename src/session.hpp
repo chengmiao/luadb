@@ -51,9 +51,11 @@ private:
                 MysqlPool::Instance()->getIOContext(index)->post([this, self, length, index](){
                     std::cout << "Asio Post" << std::endl;
                     
-                    m_luaState->set("lua_index", index);
-                    m_luaState->set("lua_recv_data", std::string(data_, length));
+                    //m_luaState->set("lua_index", index);
+                    //m_luaState->set("lua_recv_data", std::string(data_, length));
                     m_luaState->script_file("../src/script/db.lua");
+                    sol::function lua_on_recv = (*m_luaState)["onRecv"];
+                    lua_on_recv(index, std::string(data_, length));
                 });
 
                 //do_write(length);
