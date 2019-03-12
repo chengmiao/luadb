@@ -19,8 +19,6 @@ local handler_table = {}
 local index = lua_index
 local recv_data = lua_recv_data
 
-transpb:load_file("test.proto")
-registerHandler("luadb.CreateRoleReq", cbCreateRoleReq)
 
 function onRecv()
     print("On Recev Message")
@@ -48,6 +46,9 @@ local function cbCreateRoleReq(real_data)
 
     print(result_set)
 end
+
+transpb:load_file("test.proto")
+registerHandler("luadb.CreateRoleReq", cbCreateRoleReq)
 
 
 -- 生成包头
