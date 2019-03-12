@@ -30,7 +30,7 @@ public:
         });
 
         m_luaState->set_function("my_print", [](sol::variadic_args args) {
-            lua["print"](args);
+            (*m_luaState)["print"](args);
         });
 
         m_luaState->script("my_print(1, 2, 3)");
