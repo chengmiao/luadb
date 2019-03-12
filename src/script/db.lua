@@ -44,6 +44,8 @@ function diapatchHandler(msgName, real_data)
 end
 
 local function cbCreateRoleReq(real_data)
+    print("Callback Start")
+
     local real_table = transpb:decode("luadb.CreateRoleReq", real_data)
 
     local result_set = get(index, "select count(*) from users where id = " .. tostring(123))
