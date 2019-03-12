@@ -13,6 +13,7 @@ public:
         m_ioContextArrary.resize(m_threadNum, nullptr);
         m_threadArrary.resize(m_threadNum, nullptr);
         m_pDBArray.resize(m_threadNum, nullptr);
+        m_workArray.resize(m_threadNum, nullptr);
 
         for (auto i = 0; i < m_threadNum; ++i)
         {
