@@ -5,6 +5,7 @@
 #include "mysql_pool.hpp"
 
 using asio::ip::tcp;
+using gdp::db;
 
 class Session : public std::enable_shared_from_this<Session>
 {
@@ -36,12 +37,12 @@ public:
         //auto overload = sol::overload(sol::resolve<gdp::db::DBQuery&(const std::string&)>(&gdp::db::DBQuery::set),
             //sol::resolve<gdp::db::DBQuery&(const std::string&, int)>(&gdp::db::DBQuery::set<int>));
 
-        m_luaState->new_usertype<gdp::db::DBQuery>( "DBQuery",
-            sol::constructors<gdp::db::DBQuery(const std::string &)>(),
-            "insert_into", &gdp::db::DBQuery::insert_into,
-            "insert_or_update", &gdp::db::DBQuery::insert_or_update,
-            "update", &gdp::db::DBQuery::update,
-            "set", static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&)>(&gdp::db::DBQuery::set)
+        m_luaState->new_usertype<DBQuery>( "DBQuery",
+            sol::constructors<DBQuery(const std::string &)>(),
+            "insert_into", &DBQuery::insert_into,
+            "insert_or_update", &DBQuery::insert_or_update,
+            "update", &DBQuery::update,
+            "set", static_cast<DBQuery& (DBQuery::*)(const std::string&)>(&DBQuery::set)
         );
 
 
