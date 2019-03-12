@@ -29,15 +29,15 @@ public:
             return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
         });
 
-        m_luaState->set("insert_into", [](){
+        m_luaState->set("insert_into", [](sol::variadic_args args){
             //gdp::db::DBQuery query;
             std::vector<std::string> vec;
-            //for (auto v : args)
-            //{
-                //const std::string value = v;
-                vec.push_back("1234");
+            for (auto v : args)
+            {
+                std::string value = v;
+                vec.push_back(v);
 
-            //}
+            }
             sol::as_args(vec);
         });
 
