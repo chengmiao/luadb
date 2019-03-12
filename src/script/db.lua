@@ -44,7 +44,7 @@ function diapatchHandler(msgName, real_data)
     end
 end
 
-local function cbCreateRoleReq(real_data)
+function cbCreateRoleReq(real_data)
     print("Callback Start")
 
     local real_table = transpb:decode("luadb.CreateRoleReq", real_data)
