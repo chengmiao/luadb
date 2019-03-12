@@ -33,6 +33,18 @@ public:
             //return MysqlPool::Instance()->getDB(index)->execute(query);
         //});
 
+        m_luaState->new_usertype<gdp::db::DBQuery>( "DBQuery",
+            sol::constructors<gdp::db::DBQuery(const std::string &)>,
+            "insert_into", &gdp::db::DBQuery::insert_into,
+            "insert_or_update", &gdp::db::DBQuery::insert_or_update,
+            "update", &gdp::db::DBQuery::update,
+            "set", sol::overload(sol::resolve<gdp::db::DBQuery&(const std::string&)>(&gdp::db::DBQuery::set),
+            sol::resolve<gdp::db::DBQuery&(const std::string&, int)>(&gdp::db::DBQuery::set<int>)),
+
+
+        );
+
+
         do_read();
     }
 
@@ -51,8 +63,6 @@ private:
                 MysqlPool::Instance()->getIOContext(index)->post([this, self, length, index](){
                     std::cout << "Asio Post" << std::endl;
                     
-                    //m_luaState->set("lua_index", index);
-                    //m_luaState->set("lua_recv_data", std::string(data_, length));
                     m_luaState->script_file("../src/script/db.lua");
                     sol::function lua_on_recv = (*m_luaState)["onRecv"];
                     lua_on_recv(index, std::string(data_, length));
