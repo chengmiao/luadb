@@ -31,10 +31,10 @@ public:
 
         m_luaState->set("insert_into", [](sol::variadic_args args){
             gdp::db::DBQuery query;
-            std::vector<std::string> vec;
+            std::vector<const std::string> vec;
             for (auto v : args)
             {
-                std::string value = v;
+                const std::string value = v;
                 vec.push_back(value);
             }
             query.insert_into(sol::as_args(vec));
