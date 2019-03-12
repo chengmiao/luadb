@@ -10,6 +10,8 @@ require "transpb"
     head:unpack(headStr)           --根据包头str,返回包头的table结构
 --]]
 
+print("Lua Start")
+
 local handler_table = {}
 
 local index = lua_index
