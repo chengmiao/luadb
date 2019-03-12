@@ -33,7 +33,7 @@ public:
             //return MysqlPool::Instance()->getDB(index)->execute(query);
         //});
 
-        MysqlPool::Instance()->getIOContext(index)->post([](){
+        MysqlPool::Instance()->getIOContext(1)->post([](){
                     std::cout << "Asio Post" << std::endl;
                 });
 
