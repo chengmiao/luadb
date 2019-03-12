@@ -15,6 +15,10 @@ public:
 private:
     void do_accept()
     {
+        MysqlPool::Instance()->getIOContext(1)->post([](){
+                    std::cout << "Asio Post" << std::endl;
+                });
+
         acceptor_.async_accept(
         [this](std::error_code ec, tcp::socket socket)
         {
