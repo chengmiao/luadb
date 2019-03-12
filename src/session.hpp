@@ -33,7 +33,7 @@ public:
             lua["print"](args);
         });
 
-        lua.script("my_print(1, 2, 3)");
+        m_luaState->script("my_print(1, 2, 3)");
         //m_luaState->set("execute", [](int32_t index, gdp::db::DBQuery query){
             //return MysqlPool::Instance()->getDB(index)->execute(query);
         //});
