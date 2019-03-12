@@ -49,7 +49,7 @@ function cbCreateRoleReq(real_data)
 
     local real_table = transpb:decode("luadb.CreateRoleReq", real_data)
 
-    local result_set = get(index, "select count(*) from users where id = " .. tostring(123))
+    local result_set = get(1, "select count(*) from users where id = " .. tostring(123))
 
     print(result_set)
 end
