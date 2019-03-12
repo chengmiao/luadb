@@ -29,7 +29,9 @@ public:
         for (auto i = 0; i < m_threadNum; ++i)
         {
             auto ios = std::make_shared<asio::io_context>();
+            auto work = std::make_shared<asio::io_context::work>(*ios);
             m_ioContextArrary.at(i) = ios;
+            m_workArray.at(i) = work;
         }
 
         Start();
@@ -78,6 +80,7 @@ private:
     std::vector<std::shared_ptr<asio::io_context>> m_ioContextArrary;
     std::vector<std::shared_ptr<std::thread>> m_threadArrary;
     std::vector<std::shared_ptr<gdp::db::GDb>> m_pDBArray;
+    std::vector<std::shared_ptr<asio::io_context::work>> m_workArray;
 
     int32_t m_threadNum;
 };
