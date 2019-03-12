@@ -33,10 +33,6 @@ public:
             //return MysqlPool::Instance()->getDB(index)->execute(query);
         //});
 
-        MysqlPool::Instance()->getIOContext(1)->post([](){
-                    std::cout << "Asio Post" << std::endl;
-                });
-
         do_read();
     }
 
@@ -52,13 +48,13 @@ private:
                 std::cout << "Read Buffer" << std::endl;
 
                 int32_t index = 2;
-                //MysqlPool::Instance()->getIOContext(index)->post([this, self, length, index](){
-                    //std::cout << "Asio Post" << std::endl;
+                MysqlPool::Instance()->getIOContext(index)->post([this, self, length, index](){
+                    std::cout << "Asio Post" << std::endl;
                     
-                    //m_luaState->set("lua_index", index);
-                    //m_luaState->set("lua_recv_data", std::string(data_, length));
-                    //m_luaState->script_file("/script/db.lua");
-                //});
+                    m_luaState->set("lua_index", index);
+                    m_luaState->set("lua_recv_data", std::string(data_, length));
+                    m_luaState->script_file("/script/db.lua");
+                });
 
                 //do_write(length);
             }
