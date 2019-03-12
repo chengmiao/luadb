@@ -45,6 +45,8 @@ private:
         {
             if (!ec)
             {
+                std::cout << "Read Buffer" << std::endl;
+
                 int32_t index = 2;
                 MysqlPool::Instance()->getIOContext(index)->post([this, self, length, index](){
                     m_luaState->set("lua_index", index);
