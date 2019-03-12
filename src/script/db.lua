@@ -37,6 +37,7 @@ function registerHandler(msgName, func)
 end
 
 function diapatchHandler(msgName, real_data)
+    print("DispatchHandler")
     if handler_table[msgName] ~= nil
     then
         handler_table[msgName](real_data)
