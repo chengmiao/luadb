@@ -34,7 +34,7 @@ public:
         //});
 
         m_luaState->new_usertype<gdp::db::DBQuery>( "DBQuery",
-            sol::constructors<gdp::db::DBQuery(const std::string &)>,
+            sol::constructors<gdp::db::DBQuery(const std::string &)>(),
             "insert_into", &gdp::db::DBQuery::insert_into,
             "insert_or_update", &gdp::db::DBQuery::insert_or_update,
             "update", &gdp::db::DBQuery::update,
