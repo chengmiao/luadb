@@ -3,6 +3,7 @@
 #include "asio.hpp"
 #include "sol.hpp"
 #include "mysql_pool.hpp"
+#include "lua_gdb.hpp"
 
 using asio::ip::tcp;
 
@@ -14,71 +15,8 @@ public:
 
     void Start()
     {
-        m_luaState = std::make_shared<sol::state>();
-        m_luaState->open_libraries();
-
-        //(*m_luaState)["pool"] = *(MysqlPool::Instance());
-        //m_luaState->new_usertype<MysqlPool>( "pool",
-            //sol::constructors<MysqlPool()>(),
-            // typical member function
-            //"post", &MysqlPool::Post,
-            //"getDB", &MysqlPool::DBGet
-        //);
-
-        m_luaState->set("get", [](int32_t index, std::string sql){
-            return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
-        });
-
-        m_luaState->set("execute", sol::overload(
-            [](int32_t index, std::string sql){
-                return MysqlPool::Instance()->getDB(index)->execute(sql.c_str());
-            },
-            [](int32_t index, gdp::db::DBQuery& query){
-                return MysqlPool::Instance()->getDB(index)->execute(query);
-            }
-        ));
-
-        //m_luaState->set_function("my_print", [this](sol::variadic_args args) {
-            //(*m_luaState)["print"](args);
-        //});
-
-        //sol::variadic_args args;
-    
-
-        //m_luaState->script("my_print(1, 2, 3)");
-        //m_luaState->set("execute", [](int32_t index, gdp::db::DBQuery query){
-            //return MysqlPool::Instance()->getDB(index)->execute(query);
-        //});
-
-        //auto overload = sol::overload(sol::resolve<gdp::db::DBQuery&(const std::string&)>(&gdp::db::DBQuery::set),
-            //sol::resolve<gdp::db::DBQuery&(const std::string&, int)>(&gdp::db::DBQuery::set<int>));
-
-        m_luaState->new_usertype<gdp::db::DBQuery>( "DBQuery",
-            sol::constructors<gdp::db::DBQuery(const std::string &)>(),
-            "insert_into", &gdp::db::DBQuery::to_lua_insert_into,
-            "values", &gdp::db::DBQuery::to_lua_values
-            //"execute", sol::overload(static_cast<SqlResult<bool> (gdp::db::GDb::*)(const gdp::db::DBQuery &)>(&gdp::db::GDb::execute),
-                   //static_cast<SqlResult<bool> (gdp::db::GDb::*)(const std::string&)>(&gdp::db::GDb::execute))
-        );
-
-
-        lua.set_function( "insert_into", sol::overload( 
-            &DBQuery::insert_into<double>,
-            &DBQuery::insert_into<double, double>,
-            &DBQuery::insert_into<std::string>,
-            &DBQuery::insert_into<double, std::string>
-
-        ) );
-
-
-
-
-
-
-
-
-
-
+        m_luaGDb = std::make_shared<LuaGDb>();
+        m_luaGDb->RegisterGDbToLua();   
         do_read();
     }
 
@@ -97,8 +35,8 @@ private:
                 MysqlPool::Instance()->getIOContext(index)->post([this, self, length, index](){
                     std::cout << "Asio Post" << std::endl;
                     
-                    m_luaState->script_file("../src/script/db.lua");
-                    sol::function lua_on_recv = (*m_luaState)["onRecv"];
+                    m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
+                    sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     lua_on_recv(index, std::string(data_, length));
                 });
 
@@ -124,5 +62,5 @@ private:
     tcp::socket socket_;
     enum { max_length = 1024 };
     char data_[max_length];
-    std::shared_ptr<sol::state> m_luaState;
+    std::shared_ptr<LuaGDb> m_luaGDb;
 };
