@@ -33,7 +33,7 @@ public:
             [](int32_t index, std::string sql){
                 return MysqlPool::Instance()->getDB(index)->execute(sql.c_str());
             },
-            [](int32_t index, gdp::db::DBQuery query){
+            [](int32_t index, gdp::db::DBQuery& query){
                 return MysqlPool::Instance()->getDB(index)->execute(query);
             }
         ));
