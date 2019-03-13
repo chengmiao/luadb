@@ -29,11 +29,14 @@ public:
             return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
         });
 
-        m_luaState->set_function("my_print", [this](sol::variadic_args args) {
-            (*m_luaState)["print"](args);
-        });
+        //m_luaState->set_function("my_print", [this](sol::variadic_args args) {
+            //(*m_luaState)["print"](args);
+        //});
 
-        m_luaState->script("my_print(1, 2, 3)");
+        //sol::variadic_args args;
+    
+
+        //m_luaState->script("my_print(1, 2, 3)");
         //m_luaState->set("execute", [](int32_t index, gdp::db::DBQuery query){
             //return MysqlPool::Instance()->getDB(index)->execute(query);
         //});
@@ -42,12 +45,12 @@ public:
             //sol::resolve<gdp::db::DBQuery&(const std::string&, int)>(&gdp::db::DBQuery::set<int>));
 
         m_luaState->new_usertype<gdp::db::DBQuery>( "DBQuery",
-            //sol::constructors<gdp::db::DBQuery(const std::string &)>(),
-            //"insert_into", &gdp::db::DBQuery::insert_into,
+            sol::constructors<gdp::db::DBQuery(const std::string &)>(),
+            "insert_into", &gdp::db::DBQuery::to_lua_insert_into,
             //"insert_or_update", &gdp::db::DBQuery::insert_or_update,
             //"update", &gdp::db::DBQuery::update,
-            "set", sol::overload(static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&, int)>(&gdp::db::DBQuery::set),
-                   static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&)>(&gdp::db::DBQuery::set))
+            //"insert_into", sol::overload(static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&, int)>(&gdp::db::DBQuery::set),
+                   //static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&)>(&gdp::db::DBQuery::set))
         );
 
 
