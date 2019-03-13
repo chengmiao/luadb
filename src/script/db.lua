@@ -49,7 +49,11 @@ function cbCreateRoleReq(real_data)
 
     local real_table = transpb:decode("luadb.CreateRoleReq", real_data)
 
-    local result_set = get(1, "select count(*) from users where id = " .. tostring(123))
+    --local result_set = get(1, "select count(*) from users where id = " .. tostring(123))
+
+    local query = DBQuery.new("");
+    query.insert_into("users", "id", "name", "age", "sex", "phone", "address").values(1, "chengmiao", 12, 1, "166", "shanghai");
+    local result_set = execute(1, query);
 
     print(result_set)
 end
