@@ -34,6 +34,7 @@ public:
                 return MysqlPool::Instance()->getDB(index)->execute(query);
             }
         ));
+        
 
         // push gdp::db::DBQuery to lua
         auto limit_overload = sol::overload(sol::resolve<gdp::db::DBQuery&(unsigned int)>(&gdp::db::DBQuery::limit),
