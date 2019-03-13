@@ -34,14 +34,14 @@ public:
                 return MysqlPool::Instance()->getDB(index)->execute(query);
             }
         ));
-        
+
 
         // push gdp::db::DBQuery to lua
         auto limit_overload = sol::overload(sol::resolve<gdp::db::DBQuery&(unsigned int)>(&gdp::db::DBQuery::limit),
             sol::resolve<gdp::db::DBQuery&(unsigned int, unsigned int)>(&gdp::db::DBQuery::limit));
 
         auto select_overload = sol::overload(static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string &)>(&gdp::db::DBQuery::select),
-                   static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(sol::variadic_args)>(&gdp::db::DBQuery::select));
+                   static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(sol::variadic_args)>(&gdp::db::DBQuery::to_lua_select));
 
         m_lua_state->new_usertype<gdp::db::DBQuery>( "DBQuery",
             sol::constructors<gdp::db::DBQuery(const std::string &)>(),
@@ -62,7 +62,7 @@ public:
             "sql",              &gdp::db::DBQuery::sql,
             "limit",            limit_overload,
             "select",           select_overload,
-            "where",            static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&, const std::string&, sol::variadic_args)>(&gdp::db::DBQuery::where)
+            "where",            static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&, const std::string&, sol::variadic_args)>(&gdp::db::DBQuery::to_lua_where)
             
             //"execute", sol::overload(static_cast<SqlResult<bool> (gdp::db::GDb::*)(const gdp::db::DBQuery &)>(&gdp::db::GDb::execute),
                    //static_cast<SqlResult<bool> (gdp::db::GDb::*)(const std::string&)>(&gdp::db::GDb::execute))
