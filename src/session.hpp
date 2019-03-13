@@ -29,6 +29,15 @@ public:
             return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
         });
 
+        m_luaState->set("execute", sol::overload(
+            [](int32_t index, std::string sql){
+                return MysqlPool::Instance()->getDB(index)->execute(sql.c_str());
+            },
+            [](int32_t index, gdp::db::DBQuery query){
+                return MysqlPool::Instance()->getDB(index)->execute(query);
+            }
+        ));
+
         //m_luaState->set_function("my_print", [this](sol::variadic_args args) {
             //(*m_luaState)["print"](args);
         //});
@@ -48,10 +57,8 @@ public:
             sol::constructors<gdp::db::DBQuery(const std::string &)>(),
             "insert_into", &gdp::db::DBQuery::to_lua_insert_into,
             "values", &gdp::db::DBQuery::to_lua_values
-            //"insert_or_update", &gdp::db::DBQuery::insert_or_update,
-            //"update", &gdp::db::DBQuery::update,
-            //"insert_into", sol::overload(static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&, int)>(&gdp::db::DBQuery::set),
-                   //static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&)>(&gdp::db::DBQuery::set))
+            //"execute", sol::overload(static_cast<SqlResult<bool> (gdp::db::GDb::*)(const gdp::db::DBQuery &)>(&gdp::db::GDb::execute),
+                   //static_cast<SqlResult<bool> (gdp::db::GDb::*)(const std::string&)>(&gdp::db::GDb::execute))
         );
 
         do_read();
