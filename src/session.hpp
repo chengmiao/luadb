@@ -61,6 +61,24 @@ public:
                    //static_cast<SqlResult<bool> (gdp::db::GDb::*)(const std::string&)>(&gdp::db::GDb::execute))
         );
 
+
+        lua.set_function( "insert_into", sol::overload( 
+            &DBQuery::insert_into<double>,
+            &DBQuery::insert_into<double, double>,
+            &DBQuery::insert_into<std::string>,
+            &DBQuery::insert_into<double, std::string>
+
+        ) );
+
+
+
+
+
+
+
+
+
+
         do_read();
     }
 
