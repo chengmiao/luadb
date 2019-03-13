@@ -55,7 +55,7 @@ public:
             "left_join",        &gdp::db::DBQuery::left_join,
             "right_join",       &gdp::db::DBQuery::right_join,
             "sql",              &gdp::db::DBQuery::sql,
-            "limit",            limit_overload,
+            "limit",            limit_overload
             
             //"execute", sol::overload(static_cast<SqlResult<bool> (gdp::db::GDb::*)(const gdp::db::DBQuery &)>(&gdp::db::GDb::execute),
                    //static_cast<SqlResult<bool> (gdp::db::GDb::*)(const std::string&)>(&gdp::db::GDb::execute))
