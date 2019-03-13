@@ -53,10 +53,6 @@ public:
                    //static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&)>(&gdp::db::DBQuery::set))
         );
 
-		std::cout << "resulting type: " << func_type << std::endl;
-	};
-
-
         do_read();
     }
 
