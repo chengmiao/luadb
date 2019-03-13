@@ -51,7 +51,7 @@ public:
             "group_by",         &gdp::db::DBQuery::group_by,
             "order_by",         &gdp::db::DBQuery::order_by,
             "join",             &gdp::db::DBQuery::join,
-            "inner_join",       &gdp::db::DBQuery:inner_join,
+            "inner_join",       &gdp::db::DBQuery::inner_join,
             "left_join",        &gdp::db::DBQuery::left_join,
             "right_join",       &gdp::db::DBQuery::right_join,
             "sql",              &gdp::db::DBQuery::sql,
