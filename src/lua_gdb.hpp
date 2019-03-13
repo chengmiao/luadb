@@ -21,7 +21,7 @@ public:
             [](int32_t index, std::string sql){
                 return MysqlPool::Instance()->getDB(index)->get(sql.c_str());
             },
-            [](int32_t index, DBQuery & query){
+            [](int32_t index, gdp::db::DBQuery & query){
                 return MysqlPool::Instance()->getDB(index)->get(query);
             }
         ));
