@@ -86,13 +86,11 @@ public:
 
         // push SqlResult to lua
         m_lua_state->new_usertype<SqlResult<bool>>( "SqlResultBool",
-            sol::constructors<SqlResult<bool>()>(),
             "errorString", &SqlResult<bool>::errorString,
             "resultVal",   &SqlResult<bool>::resultVal
         );
 
         m_lua_state->new_usertype<SqlResult<std::shared_ptr<gdp::db::ResultSet>>>( "SqlResultSet",
-            sol::constructors<SqlResult<std::shared_ptr<gdp::db::ResultSet>>()>(),
             "errorString", &SqlResult<gdp::db::ResultSet>::errorString,
             "resultVal",   &SqlResult<gdp::db::ResultSet>::resultVal
         );
