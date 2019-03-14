@@ -17,7 +17,7 @@ public:
     {
         m_luaGDb = std::make_shared<LuaGDb>();
         m_luaGDb->RegisterGDbToLua();
-        m_luaGDb->GetLuaState()->set("send", [this](std:;size_t length){
+        m_luaGDb->GetLuaState()->set("send", [this](std::size_t length){
             do_write(length);
         });
         do_read();
