@@ -24,9 +24,9 @@ public:
     {
         m_luaGDb = std::make_shared<LuaGDb>();
         m_luaGDb->RegisterGDbToLua();
-        m_luaGDb->GetLuaState()->set("send", [this](std::size_t length){
-            do_write(length);
-        });
+        //m_luaGDb->GetLuaState()->set("send", [this](std::size_t length){
+            //do_write(length);
+        //});
 
         do_read();
     }
@@ -54,15 +54,15 @@ private:
         });
     }
 
-    void do_write(std::size_t length)
+    void do_write(std::shared_ptr<std::string> content)
     {
         auto self(shared_from_this());
-        asio::async_write(socket_, asio::buffer(data_, length),
+        asio::async_write(socket_, asio::buffer(content->data(), content->size()),
         [this, self](std::error_code ec, std::size_t)
         {
             if (!ec)
             {
-                do_read();
+                //do_read();
             }
         });
     }
