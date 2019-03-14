@@ -42,8 +42,6 @@ private:
                     sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     lua_on_recv(index, std::string(data_, length), length);
                 });
-
-                //do_write(length);
             }
         });
     }

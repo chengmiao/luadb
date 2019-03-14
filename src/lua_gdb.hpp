@@ -63,9 +63,6 @@ public:
             "limit",            limit_overload,
             "select",           select_overload,
             "where",            static_cast<gdp::db::DBQuery& (gdp::db::DBQuery::*)(const std::string&, const std::string&, sol::variadic_args)>(&gdp::db::DBQuery::to_lua_where)
-            
-            //"execute", sol::overload(static_cast<SqlResult<bool> (gdp::db::GDb::*)(const gdp::db::DBQuery &)>(&gdp::db::GDb::execute),
-                   //static_cast<SqlResult<bool> (gdp::db::GDb::*)(const std::string&)>(&gdp::db::GDb::execute))
         );
 
         // push gdp::db::resultset to lua
