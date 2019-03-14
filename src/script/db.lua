@@ -55,9 +55,10 @@ function cbCreateRoleReq(real_data)
     query:insert_into("users", "id", "name", "age", "sex", "phone", "address"):values(2, "linda", 123, 2, "166", "shanghai")
     local result_set = execute(1, query)
 
-    if result_set:resultVal == true
+    if result_set.resultVal == true
     then
         print("Lua Execute Success")
+        print(result_set.errorString)
     end
 
     print(result_set)
