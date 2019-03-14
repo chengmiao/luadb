@@ -83,6 +83,17 @@ public:
             "get_llong_at",  &gdp::db::ResultSet::get_llong_at,
             "next",          &gdp::db::ResultSet::next
         );
+
+        // push SqlResult to lua
+        m_lua_state->new_usertype<SqlResult<bool>>( "SqlResultBool",
+            "errorString", &SqlResult<bool>::errorString,
+            "resultVal",   &SqlResult<bool>::resultVal
+        );
+
+        m_lua_state->new_usertype<SqlResult<gdp::db::ResultSet>>( "SqlResultSet",
+            "errorString", &SqlResult<gdp::db::ResultSet>::errorString,
+            "resultVal",   &SqlResult<gdp::db::ResultSet>::resultVal
+        );
     }
 
     std::shared_ptr<sol::state>& GetLuaState()
