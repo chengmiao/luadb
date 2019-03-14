@@ -91,8 +91,8 @@ public:
         );
 
         m_lua_state->new_usertype<SqlResult<std::shared_ptr<gdp::db::ResultSet>>>( "SqlResultSet",
-            "errorString", &SqlResult<gdp::db::ResultSet>::errorString,
-            "resultVal",   &SqlResult<gdp::db::ResultSet>::resultVal
+            "errorString", &SqlResult<std::shared_ptr<gdp::db::ResultSet>>::errorString,
+            "resultVal",   &SqlResult<std::shared_ptr<gdp::db::ResultSet>>::resultVal
         );
     }
 
