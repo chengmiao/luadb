@@ -16,7 +16,10 @@ public:
     void Start()
     {
         m_luaGDb = std::make_shared<LuaGDb>();
-        m_luaGDb->RegisterGDbToLua();   
+        m_luaGDb->RegisterGDbToLua();
+        m_luaGDb->GetLuaState()->set("send", [this](std:;size_t length){
+            do_write(length);
+        });
         do_read();
     }
 
@@ -37,7 +40,7 @@ private:
                     
                     m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
                     sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
-                    lua_on_recv(index, std::string(data_, length));
+                    lua_on_recv(index, std::string(data_, length), length);
                 });
 
                 //do_write(length);

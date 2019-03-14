@@ -15,6 +15,7 @@ require "transpb"
 print("Lua Start")
 
 local handler_table = {}
+local send_length
 
 --local index = lua_index
 --local recv_data = lua_recv_data
@@ -24,9 +25,11 @@ function init()
     registerHandler("luadb.CreateRoleReq", cbCreateRoleReq)
 end
 
-function onRecv(index, recv_data)
+function onRecv(index, recv_data, length)
     print("On Recev Message")
     --func:toHex(data)
+
+    send_length = length
 
     local recv_table = transpb:decode("luadb.MsgHead", recv_data)
     diapatchHandler(recv_table["proto"], recv_table["data"])
@@ -51,18 +54,22 @@ function cbCreateRoleReq(real_data)
 
     --local result_set = get(1, "select count(*) from users where id = " .. tostring(123))
 
-    local query = DBQuery.new("")
-    query:insert_into("users", "id", "name", "age", "sex", "phone", "address"):values(2, "linda", 123, 2, "166", "shanghai")
-    local result_set = execute(1, query)
+    --local query = DBQuery.new("")
+    --query:insert_into("users", "id", "name", "age", "sex", "phone", "address"):values(2, "linda", 123, 2, "166", "shanghai")
+    --local result_set = execute(1, query)
 
-    if result_set.resultVal == true
-    then
-        print("Lua Execute Success")
-        print(result_set.errorString)
-    end
+    --if result_set.resultVal == true
+    --then
+        --print("Lua Execute Success")
+        --print(result_set.errorString)
+    --end
 
-    print(result_set)
+    --print(result_set)
+
+    send(send_length)
 end
+
+
 
 init()
 
