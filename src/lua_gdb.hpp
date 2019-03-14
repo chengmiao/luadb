@@ -70,7 +70,7 @@ public:
 
         // push gdp::db::resultset to lua
         m_lua_state->new_usertype<gdp::db::ResultSet>( "ResultSet",
-            sol::constructors<gdp::db::ResultSet(MYSQL_RES *), gdp::db::ResultSet()>(),
+            sol::constructors<gdp::db::ResultSet(MYSQL_RES *)>(),
             "get_int32_at",  &gdp::db::ResultSet::get_int32_at,
             "get_int64_at",  &gdp::db::ResultSet::get_int64_at,
             "get_int32",     &gdp::db::ResultSet::get_int32,
@@ -92,7 +92,7 @@ public:
         );
 
         m_lua_state->new_usertype<SqlResult<gdp::db::ResultSet>>( "SqlResultSet",
-            sol::constructors<SqlResult<gdp::db::ResultSet>()>(),
+            sol::constructors<SqlResult<std::shared_ptr<gdp::db::ResultSet>>()>(),
             "errorString", &SqlResult<gdp::db::ResultSet>::errorString,
             "resultVal",   &SqlResult<gdp::db::ResultSet>::resultVal
         );
