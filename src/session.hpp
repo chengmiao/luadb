@@ -123,9 +123,11 @@ private:
 	    }
     }
 
+    static std::shared_ptr<LuaGDb> m_luaGDb;
+
 private:
     tcp::socket socket_;
-    static std::shared_ptr<LuaGDb> m_luaGDb;
+    //std::shared_ptr<LuaGDb> m_luaGDb;
     char *read_buf_;
 	uint32_t kMaxSize = 64 * 1024;
 
