@@ -5,6 +5,8 @@
 
 using asio::ip::tcp;
 
+#define SOL_CHECK_ARGUMENTS 1
+
 int main(int argc, char* argv[])
 {
     try
