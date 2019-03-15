@@ -104,15 +104,13 @@ private:
                 std::string lua_data = std::string(consume_pos(), length);
 
                 int32_t index = 2;
-                MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
+                //MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
                     std::cout << "Asio Post" << std::endl;
                     
-                    //m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
-                    //sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
-                    //lua_on_recv(index, lua_data);
-
-                    m_luaGDb->GetLuaState()->set("tmp", 20);
-                });
+                    m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
+                    sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
+                    lua_on_recv(index, lua_data);
+                //});
 
                 consume_pos_ += length;
 		    }
