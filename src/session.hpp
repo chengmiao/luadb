@@ -148,4 +148,4 @@ private:
     }
 };
 
-Session::m_luaGDb = nullptr;
+Session::std::shared_ptr<LuaGDb> m_luaGDb = nullptr;
