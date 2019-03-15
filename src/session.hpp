@@ -22,11 +22,12 @@ public:
 
     void Start()
     {
-        m_luaGDb = std::make_shared<LuaGDb>();
-        m_luaGDb->RegisterGDbToLua();
-        m_luaGDb->GetLuaState()->set("send", [this](std::string context){
-            do_write(context);
-        });
+        m_lua_state = std::make_shared<sol::state>();
+        //m_luaGDb = std::make_shared<LuaGDb>();
+        //m_luaGDb->RegisterGDbToLua();
+        //m_luaGDb->GetLuaState()->set("send", [this](std::string context){
+            //do_write(context);
+        //});
 
         do_read();
     }
@@ -111,7 +112,8 @@ private:
                     //sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     //lua_on_recv(index, lua_data);
 
-                    m_luaGDb->GetLuaState()->set("tmp", 20);
+                    //m_luaGDb->GetLuaState()->set("tmp", 20);
+                    m_lua_state->set("tmp", 20);
                 //});
 
                 consume_pos_ += length;
@@ -144,4 +146,6 @@ private:
 	    consume_pos_ = 0;
 	    produce_pos_ = cur_size;
     }
+
+    std::shared_ptr<sol::state> m_lua_state;
 };
