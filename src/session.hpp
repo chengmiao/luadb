@@ -108,9 +108,11 @@ private:
                     m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
                     sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     lua_on_recv(index, std::string(consume_pos(), length));
+
+                    consume_pos_ += length;
                 });
 
-                consume_pos_ += length;
+                //consume_pos_ += length;
 		    }
 		    else
 		    {
