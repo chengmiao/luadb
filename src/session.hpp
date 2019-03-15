@@ -54,7 +54,7 @@ private:
         });
     }
 
-    void do_write(std::shared_ptr<std::string> content)
+    void do_write(std::string content)
     {
         auto self(shared_from_this());
         asio::async_write(socket_, asio::buffer(content->data(), content->size()),
