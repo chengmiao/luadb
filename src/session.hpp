@@ -74,6 +74,7 @@ private:
 		    NetHead Head;
 		    if (consumable() < sizeof(Head))
 		    {
+                std::cout << "consumable() < sizeof(Head)" << std::endl;
 			    break;
 		    }
 
