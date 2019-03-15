@@ -106,7 +106,7 @@ private:
 
                 int32_t index = 2;
                 MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
-                    std::cout << "Asio Post" << std::to_string(length) << std::endl;
+                    std::cout << "Asio Post" << std::endl;
                     
                     m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
                     sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
