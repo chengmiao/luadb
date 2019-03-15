@@ -111,7 +111,7 @@ private:
                     //sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     //lua_on_recv(index, lua_data);
 
-                    //m_luaGDb->GetLuaState()->set("tmp", 20);
+                    m_luaGDb->GetLuaState()->set("tmp", 20);
                 //});
 
                 consume_pos_ += length;
