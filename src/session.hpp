@@ -43,7 +43,7 @@ private:
             {
                 std::cout << "Read Buffer" << std::to_string(length) << std::endl;
 
-                //m_lua_state->set("tmp", 20);
+                m_lua_state->set("tmp", 20);
 
                 produce_pos_ += length;
                 consume();
@@ -115,7 +115,7 @@ private:
                     //lua_on_recv(index, lua_data);
 
                     //m_luaGDb->GetLuaState()->set("tmp", 20);
-                    m_lua_state->set("tmp", 20);
+                    //m_lua_state->set("tmp", 20);
                 //});
 
                 consume_pos_ += length;
