@@ -74,7 +74,7 @@ private:
     {
         //while (true)
 	    //{
-		    //NetHead Head;
+		    NetHead Head;
 		    //if (consumable() < sizeof(Head))
 		    //{
                 //std::cout << "consumable() < sizeof(Head)" << std::endl;
