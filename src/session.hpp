@@ -31,6 +31,8 @@ public:
         do_read();
     }
 
+    static std::shared_ptr<LuaGDb> m_luaGDb;
+
 private:
     void do_read()
     {
@@ -122,8 +124,6 @@ private:
 		    }
 	    }
     }
-
-    static std::shared_ptr<LuaGDb> m_luaGDb;
 
 private:
     tcp::socket socket_;
