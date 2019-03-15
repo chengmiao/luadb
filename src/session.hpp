@@ -137,12 +137,14 @@ private:
 	std::size_t consume_pos_;
 
 	char *consume_pos(){ std::cout << "consume_pos :" << std::to_string(consume_pos_) << std::endl; return read_buf_ + consume_pos_; }
-	char *produce_pos(){ std::cout << "consume_pos :" << std::to_string(produce_pos_) << std::endl; return read_buf_ + produce_pos_; }
-	std::size_t consumable(){ return produce_pos_ - consume_pos_; }
-	std::size_t producible(){ return kMaxSize - produce_pos_; }
+	char *produce_pos(){ std::cout << "produce_pos :" << std::to_string(produce_pos_) << std::endl; return read_buf_ + produce_pos_; }
+	std::size_t consumable(){ std::cout << "consumable :" << std::to_string(produce_pos_ - consume_pos_) << std::endl; return produce_pos_ - consume_pos_; }
+	std::size_t producible(){ std::cout << "producible :" << std::to_string(kMaxSize - produce_pos_) << std::endl; return kMaxSize - produce_pos_; }
 	bool produce_end(){ return produce_pos_ == kMaxSize; }
 	void rearrange_read_buf()
     {
+        std::cout << "rearrange_read_buf :" << std::endl;
+
         std::size_t cur_size = consumable();
 	    memcpy(read_buf_, consume_pos(), cur_size);
 	    consume_pos_ = 0;
