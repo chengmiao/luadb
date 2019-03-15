@@ -45,13 +45,13 @@ private:
 
                 m_lua_state->set("tmp", 20);
 
-                //produce_pos_ += length;
-                //consume_pos_ += length;
+                produce_pos_ += length;
+                consume_pos_ += length;
                 //consume();
-                //if (produce_end())
-                //{
-                    //rearrange_read_buf();
-                //}
+                if (produce_end())
+                {
+                    rearrange_read_buf();
+                }
 
                 do_read();
             }
@@ -132,7 +132,7 @@ private:
     tcp::socket socket_;
     std::shared_ptr<LuaGDb> m_luaGDb;
     char *read_buf_;
-	uint32_t kMaxSize = 1024;
+	uint32_t kMaxSize = 60;
 
 	std::size_t produce_pos_;
 	std::size_t consume_pos_;
