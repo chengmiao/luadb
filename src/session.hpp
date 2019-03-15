@@ -43,11 +43,8 @@ private:
             {
                 std::cout << "Read Buffer" << std::to_string(length) << std::endl;
 
-                m_lua_state->set("tmp", 20);
-
                 produce_pos_ += length;
-                consume_pos_ += length;
-                //consume();
+                consume();
                 if (produce_end())
                 {
                     rearrange_read_buf();
@@ -105,19 +102,19 @@ private:
 		    if (consumable() - sizeof(Head) >= Head.len)
 		    {
                 std::size_t length = Head.len + sizeof(Head);
-                //std::string lua_data = std::string(consume_pos(), length);
+                std::string lua_data = std::string(consume_pos(), length);
 
                 int32_t index = 2;
-                //MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
+                MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
                     std::cout << "Asio Post" << std::to_string(length) << std::endl;
                     
-                    //m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
-                    //sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
-                    //lua_on_recv(index, lua_data);
+                    m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
+                    sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
+                    lua_on_recv(index, lua_data);
 
                     //m_luaGDb->GetLuaState()->set("tmp", 20);
                     //m_lua_state->set("tmp", 20);
-                //});
+                });
 
                 consume_pos_ += length;
 		    }
