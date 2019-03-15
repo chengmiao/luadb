@@ -43,12 +43,14 @@ private:
             {
                 std::cout << "Read Buffer" << std::endl;
 
-                produce_pos_ += length;
-                consume();
-                if (produce_end())
-                {
-                    rearrange_read_buf();
-                }
+                m_lua_state->set("tmp", 20);
+
+                //produce_pos_ += length;
+                //consume();
+                //if (produce_end())
+                //{
+                    //rearrange_read_buf();
+                //}
 
                 do_read();
             }
