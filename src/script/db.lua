@@ -26,15 +26,15 @@ end
 
 function onRecv(index, recv_data)
     print("On Recev Message")
-    --func:toHex(data)
+    func:toHex(recv_data)
 
     local length = #recv_data
-    if length <= 32
+    if length <= 4
     then
         return
     end
 
-    local real_data = string.sub(recv_data, 33, length) 
+    local real_data = string.sub(recv_data, 5, length) 
 
     local recv_table = transpb:decode("luadb.MsgHead", real_data)
     diapatchHandler(recv_table["proto"], recv_table["data"])
