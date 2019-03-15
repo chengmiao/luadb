@@ -12,7 +12,7 @@ public:
         m_lua_state = std::make_shared<sol::state>();
     }
 
-    ~luaGDb()
+    ~LuaGDb()
     {
         std::cout << "Delete LuaGDb !!!" << std::endl;
     }
