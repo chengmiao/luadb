@@ -102,7 +102,7 @@ private:
                 std::size_t length = Head.len + sizeof(Head);
 
                 int32_t index = 2;
-                MysqlPool::Instance()->getIOContext(index)->post([this, length, index](){
+                //MysqlPool::Instance()->getIOContext(index)->post([this, length, index](){
                     std::cout << "Asio Post" << std::endl;
                     
                     m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
@@ -110,7 +110,7 @@ private:
                     lua_on_recv(index, std::string(consume_pos(), length));
 
                     consume_pos_ += length;
-                });
+                //});
 
                 //consume_pos_ += length;
 		    }
