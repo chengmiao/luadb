@@ -26,7 +26,7 @@ end
 
 function onRecv(index, recv_data)
     print("On Recev Message")
-    func:toHex(recv_data)
+    transpb:toHex(recv_data)
 
     local length = #recv_data
     if length <= 4
