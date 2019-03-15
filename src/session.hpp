@@ -100,7 +100,6 @@ private:
 		    if (consumable() - sizeof(Head) >= Head.len)
 		    {
                 std::size_t length = Head.len + sizeof(Head);
-			    consume_pos_ += length;
 
                 int32_t index = 2;
                 MysqlPool::Instance()->getIOContext(index)->post([this, length, index](){
@@ -110,6 +109,8 @@ private:
                     sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     lua_on_recv(index, std::string(consume_pos(), length));
                 });
+
+                consume_pos_ += length;
 		    }
 		    else
 		    {
