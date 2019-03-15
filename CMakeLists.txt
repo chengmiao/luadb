@@ -4,7 +4,7 @@ set (CMAKE_C_COMPILER /usr/bin/gcc)
 cmake_minimum_required(VERSION 2.8)
 project(luadb)
 
-set(CMAKE_CXX_FLAGS "-std=c++14 -ldl -lpthread -g")
+set(CMAKE_CXX_FLAGS "-std=c++14 -ldl -lpthread -g -rdynamic")
 set(CMAKE_C_FLAGS "-fPIC")
 set(LUA_LIB liblua.a)    
 
