@@ -12,6 +12,11 @@ public:
         m_lua_state = std::make_shared<sol::state>();
     }
 
+    ~luaGDb()
+    {
+        std::cout << "Delete LuaGDb !!!" << std::endl;
+    }
+
     void RegisterGDbToLua()
     {
         m_lua_state->open_libraries();
