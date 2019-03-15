@@ -15,7 +15,6 @@ require "transpb"
 print("Lua Start")
 
 local handler_table = {}
-local send_length
 
 --local index = lua_index
 --local recv_data = lua_recv_data
@@ -25,13 +24,19 @@ function init()
     registerHandler("luadb.CreateRoleReq", cbCreateRoleReq)
 end
 
-function onRecv(index, recv_data, length)
+function onRecv(index, recv_data)
     print("On Recev Message")
     --func:toHex(data)
 
-    send_length = length
+    local length = #recv_data
+    if length <= 32
+    then
+        return
+    end
 
-    local recv_table = transpb:decode("luadb.MsgHead", recv_data)
+    local real_data = string.sub(recv_data, 33, length) 
+
+    local recv_table = transpb:decode("luadb.MsgHead", real_data)
     diapatchHandler(recv_table["proto"], recv_table["data"])
 end
 
@@ -50,7 +55,7 @@ end
 function cbCreateRoleReq(real_data)
     print("Callback Start")
 
-    local real_table = transpb:decode("luadb.CreateRoleReq", real_data)
+    --local real_table = transpb:decode("luadb.CreateRoleReq", real_data)
 
     --local result_set = get(1, "select count(*) from users where id = " .. tostring(123))
 
@@ -66,7 +71,7 @@ function cbCreateRoleReq(real_data)
 
     --print(result_set)
 
-    send(send_length)
+    send("Send MSG to Client")
 end
 
 
