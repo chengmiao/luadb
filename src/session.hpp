@@ -78,12 +78,14 @@ private:
 		    }
 
 		    Head.len = *((uint32_t*)consume_pos());
+            std::cout << "Client Msg Length :" << std::to_string(Head.len) << std::endl;
 		    //Head.len = htonl(Head.len);
 
 		    if (Head.len > kMaxSize)
 		    {
 			    //LOG_ERROR("read_size_ overflow");
 			    //close();
+                std::cout << "read_size_ overflow :" << std::endl;
 			    break;
 		    }
 
@@ -91,6 +93,7 @@ private:
 		    {
 			    //LOG_ERROR("incorrect body size");
 			    //close();
+                std::cout << "incorrect body size :" << std::endl;
 			    break;
 		    }
 
