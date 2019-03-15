@@ -72,39 +72,39 @@ private:
 
     void consume()
     {
-        while (true)
-	    {
-		    NetHead Head;
-		    if (consumable() < sizeof(Head))
-		    {
-                std::cout << "consumable() < sizeof(Head)" << std::endl;
-			    break;
-		    }
+        //while (true)
+	    //{
+		    //NetHead Head;
+		    //if (consumable() < sizeof(Head))
+		    //{
+                //std::cout << "consumable() < sizeof(Head)" << std::endl;
+			    //break;
+		    //}
 
 		    Head.len = *((uint32_t*)consume_pos());
-            std::cout << "Client Msg Length :" << std::to_string(Head.len) << std::endl;
+            //std::cout << "Client Msg Length :" << std::to_string(Head.len) << std::endl;
 		    //Head.len = htonl(Head.len);
 
-		    if (Head.len > kMaxSize)
-		    {
+		    //if (Head.len > kMaxSize)
+		    //{
 			    //LOG_ERROR("read_size_ overflow");
 			    //close();
-                std::cout << "read_size_ overflow :" << std::endl;
-			    break;
-		    }
+                //std::cout << "read_size_ overflow :" << std::endl;
+			    //break;
+		    //}
 
-		    if (Head.len < 0)
-		    {
+		    //if (Head.len < 0)
+		    //{
 			    //LOG_ERROR("incorrect body size");
 			    //close();
-                std::cout << "incorrect body size :" << std::endl;
-			    break;
-		    }
+                //std::cout << "incorrect body size :" << std::endl;
+			    //break;
+		    //}
 
-		    if (consumable() - sizeof(Head) >= Head.len)
-		    {
+		    //if (consumable() - sizeof(Head) >= Head.len)
+		    //{
                 std::size_t length = Head.len + sizeof(Head);
-                std::string lua_data = std::string(consume_pos(), length);
+                //std::string lua_data = std::string(consume_pos(), length);
 
                 int32_t index = 2;
                 //MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
@@ -119,11 +119,11 @@ private:
                 //});
 
                 consume_pos_ += length;
-		    }
-		    else
-		    {
-			    break;
-		    }
+		    //}
+		    //else
+		    //{
+			    //break;
+		    //}
 	    }
     }
 
