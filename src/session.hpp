@@ -22,16 +22,14 @@ public:
 
     void Start()
     {
-        Session::m_luaGDb = std::make_shared<LuaGDb>();
-        Session::m_luaGDb->RegisterGDbToLua();
-        Session::m_luaGDb->GetLuaState()->set("send", [this](std::string context){
+        m_luaGDb = std::make_shared<LuaGDb>();
+        m_luaGDb->RegisterGDbToLua();
+        m_luaGDb->GetLuaState()->set("send", [this](std::string context){
             do_write(context);
         });
 
         do_read();
     }
-
-    static std::shared_ptr<LuaGDb> m_luaGDb;
 
 private:
     void do_read()
@@ -113,7 +111,7 @@ private:
                     //sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     //lua_on_recv(index, lua_data);
 
-                    Session::m_luaGDb->GetLuaState()->set("tmp", 20);
+                    m_luaGDb->GetLuaState()->set("tmp", 20);
                 });
 
                 consume_pos_ += length;
@@ -127,7 +125,7 @@ private:
 
 private:
     tcp::socket socket_;
-    //std::shared_ptr<LuaGDb> m_luaGDb;
+    std::shared_ptr<LuaGDb> m_luaGDb;
     char *read_buf_;
 	uint32_t kMaxSize = 64 * 1024;
 
@@ -147,5 +145,3 @@ private:
 	    produce_pos_ = cur_size;
     }
 };
-
-std::shared_ptr<LuaGDb> Session::m_luaGDb = nullptr;
