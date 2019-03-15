@@ -45,8 +45,8 @@ private:
 
                 m_lua_state->set("tmp", 20);
 
-                produce_pos_ += length;
-                consume_pos_ += length;
+                //produce_pos_ += length;
+                //consume_pos_ += length;
                 //consume();
                 //if (produce_end())
                 //{
