@@ -22,12 +22,12 @@ public:
 
     void Start()
     {
-        m_lua_state = std::make_shared<sol::state>();
-        //m_luaGDb = std::make_shared<LuaGDb>();
-        //m_luaGDb->RegisterGDbToLua();
-        //m_luaGDb->GetLuaState()->set("send", [this](std::string context){
-            //do_write(context);
-        //});
+        //m_lua_state = std::make_shared<sol::state>();
+        m_luaGDb = std::make_shared<LuaGDb>();
+        m_luaGDb->RegisterGDbToLua();
+        m_luaGDb->GetLuaState()->set("send", [this](std::string context){
+            do_write(context);
+        });
 
         do_read();
     }
