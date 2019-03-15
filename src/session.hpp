@@ -57,7 +57,7 @@ private:
     void do_write(std::string content)
     {
         auto self(shared_from_this());
-        asio::async_write(socket_, asio::buffer(content->data(), content->size()),
+        asio::async_write(socket_, asio::buffer(content.data(), content.size()),
         [this, self](std::error_code ec, std::size_t)
         {
             if (!ec)
