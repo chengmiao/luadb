@@ -45,12 +45,12 @@ private:
 
                 //m_lua_state->set("tmp", 20);
 
-                //produce_pos_ += length;
+                produce_pos_ += length;
                 consume();
-                //if (produce_end())
-                //{
-                    //rearrange_read_buf();
-                //}
+                if (produce_end())
+                {
+                    rearrange_read_buf();
+                }
 
                 do_read();
             }
@@ -72,37 +72,37 @@ private:
 
     void consume()
     {
-        //while (true)
-	    //{
+        while (true)
+	    {
 		    NetHead Head;
-		    //if (consumable() < sizeof(Head))
-		    //{
-                //std::cout << "consumable() < sizeof(Head)" << std::endl;
-			    //break;
-		    //}
+		    if (consumable() < sizeof(Head))
+		    {
+                std::cout << "consumable() < sizeof(Head)" << std::endl;
+			    break;
+		    }
 
 		    Head.len = *((uint32_t*)consume_pos());
-            //std::cout << "Client Msg Length :" << std::to_string(Head.len) << std::endl;
+            std::cout << "Client Msg Length :" << std::to_string(Head.len) << std::endl;
 		    //Head.len = htonl(Head.len);
 
-		    //if (Head.len > kMaxSize)
-		    //{
+		    if (Head.len > kMaxSize)
+		    {
 			    //LOG_ERROR("read_size_ overflow");
 			    //close();
-                //std::cout << "read_size_ overflow :" << std::endl;
-			    //break;
-		    //}
+                std::cout << "read_size_ overflow :" << std::endl;
+			    break;
+		    }
 
-		    //if (Head.len < 0)
-		    //{
+		    if (Head.len < 0)
+		    {
 			    //LOG_ERROR("incorrect body size");
 			    //close();
-                //std::cout << "incorrect body size :" << std::endl;
-			    //break;
-		    //}
+                std::cout << "incorrect body size :" << std::endl;
+			    break;
+		    }
 
-		    //if (consumable() - sizeof(Head) >= Head.len)
-		    //{
+		    if (consumable() - sizeof(Head) >= Head.len)
+		    {
                 std::size_t length = Head.len + sizeof(Head);
                 //std::string lua_data = std::string(consume_pos(), length);
 
@@ -118,13 +118,13 @@ private:
                     m_lua_state->set("tmp", 20);
                 //});
 
-                //consume_pos_ += length;
-		    //}
-		    //else
-		    //{
-			    //break;
-		    //}
-	    //}
+                consume_pos_ += length;
+		    }
+		    else
+		    {
+			    break;
+		    }
+	    }
     }
 
 private:
@@ -136,8 +136,8 @@ private:
 	std::size_t produce_pos_;
 	std::size_t consume_pos_;
 
-	char *consume_pos(){ return read_buf_ + consume_pos_; }
-	char *produce_pos(){ return read_buf_ + produce_pos_; }
+	char *consume_pos(){ std::cout << "consume_pos :" << std::to_string(consume_pos_) << std::endl; return read_buf_ + consume_pos_; }
+	char *produce_pos(){ std::cout << "consume_pos :" << std::to_string(produce_pos_) << std::endl; return read_buf_ + produce_pos_; }
 	std::size_t consumable(){ return produce_pos_ - consume_pos_; }
 	std::size_t producible(){ return kMaxSize - produce_pos_; }
 	bool produce_end(){ return produce_pos_ == kMaxSize; }
