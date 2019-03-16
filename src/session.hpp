@@ -25,6 +25,7 @@ public:
         //m_lua_state = std::make_shared<sol::state>();
         m_luaGDb = std::make_shared<LuaGDb>();
         m_luaGDb->RegisterGDbToLua();
+        m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
         m_luaGDb->GetLuaState()->set("send", [this](std::string context){
             do_write(context);
         });
@@ -108,7 +109,7 @@ private:
                 MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
                     std::cout << "Asio Post" << std::endl;
                     
-                    m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
+                    //m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
                     sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     lua_on_recv(index, lua_data);
 
