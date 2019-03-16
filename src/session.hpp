@@ -53,6 +53,10 @@ private:
 
                 do_read();
             }
+            else
+            {
+                close();
+            }
         });
     }
 
@@ -65,6 +69,10 @@ private:
             if (!ec)
             {
                 //do_read();
+            }
+            else
+            {
+                close();
             }
         });
     }
@@ -87,7 +95,7 @@ private:
 		    if (Head.len > kMaxSize)
 		    {
 			    //LOG_ERROR("read_size_ overflow");
-			    //close();
+			    close();
                 std::cout << "read_size_ overflow :" << std::endl;
 			    break;
 		    }
@@ -95,7 +103,7 @@ private:
 		    if (Head.len < 0)
 		    {
 			    //LOG_ERROR("incorrect body size");
-			    //close();
+			    close();
                 std::cout << "incorrect body size :" << std::endl;
 			    break;
 		    }
@@ -108,13 +116,9 @@ private:
                 int32_t index = 2;
                 MysqlPool::Instance()->getIOContext(index)->post([this, lua_data, index](){
                     std::cout << "Asio Post" << std::endl;
-                    
-                    //m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
+                
                     sol::function lua_on_recv = (*(m_luaGDb->GetLuaState()))["onRecv"];
                     lua_on_recv(index, lua_data);
-
-                    //m_luaGDb->GetLuaState()->set("tmp", 20);
-                    //m_lua_state->set("tmp", 20);
                 });
 
                 consume_pos_ += length;
@@ -149,6 +153,11 @@ private:
 	    memcpy(read_buf_, consume_pos(), cur_size);
 	    consume_pos_ = 0;
 	    produce_pos_ = cur_size;
+    }
+
+    void close()
+    {
+        socket_.close();
     }
 
     std::shared_ptr<sol::state> m_lua_state;
