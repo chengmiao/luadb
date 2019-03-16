@@ -12,6 +12,11 @@ public:
         do_accept();
     }
 
+    void stop()
+    {
+        acceptor_.close();
+    }
+
 private:
     void do_accept()
     {

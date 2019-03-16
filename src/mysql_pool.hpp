@@ -53,6 +53,24 @@ public:
         }
     }
 
+    void Stop()
+    {
+        for(auto& v : m_ioContextArrary)
+        {
+            if (v != nullptr)
+            {
+                v->stop();
+            }
+        }
+
+        for(auto& t : m_threadArrary)
+        {
+            if (t != nullptr && t->joinable())
+            {
+                t->join();
+            }
+        }
+    }
     
     std::shared_ptr<asio::io_context>
     getIOContext(int32_t index)
