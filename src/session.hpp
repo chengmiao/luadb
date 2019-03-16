@@ -14,7 +14,7 @@ public:
     Session(tcp::socket socket)
     : socket_(std::move(socket)),
     produce_pos_(0),
-    consume_pos_(0),
+    consume_pos_(0)
     //read_buf_(new char[kMaxSize])
     {}
 
