@@ -7,7 +7,7 @@ public:
     void init(int32_t port)
     {
         m_context = std::make_shared<asio::io_context>();
-        m_server = std::make_shared<Server>(m_context, port);
+        m_server = std::make_shared<Server>(*m_context, port);
         m_context->run(); 
     }   
 

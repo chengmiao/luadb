@@ -7,7 +7,7 @@ using asio::ip::tcp;
 class Server
 {
 public:
-    Server(std::shared_ptr<asio::io_context>& io_context, short port) : acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
+    Server(asio::io_context& io_context, short port) : acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
     {
         do_accept();
     }
