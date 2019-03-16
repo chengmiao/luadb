@@ -130,7 +130,7 @@ private:
     tcp::socket socket_;
     std::shared_ptr<LuaGDb> m_luaGDb;
     char *read_buf_;
-	uint32_t kMaxSize = 30;
+	uint32_t kMaxSize = 64 * 1024;
 
 	std::size_t produce_pos_;
 	std::size_t consume_pos_;
