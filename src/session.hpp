@@ -15,7 +15,7 @@ public:
     : socket_(std::move(socket)),
     produce_pos_(0),
     consume_pos_(0),
-    read_buf_(new char[kMaxSize])
+    //read_buf_(new char[kMaxSize])
     {}
 
     ~Session() { delete[] read_buf_; }
@@ -129,8 +129,9 @@ private:
 private:
     tcp::socket socket_;
     std::shared_ptr<LuaGDb> m_luaGDb;
-    char *read_buf_;
+    //char *read_buf_;
 	uint32_t kMaxSize = 64 * 1024;
+    char read_buf_[kMaxSize];
 
 	std::size_t produce_pos_;
 	std::size_t consume_pos_;
