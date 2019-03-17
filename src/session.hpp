@@ -22,10 +22,11 @@ public:
 
     void Start()
     {
-        //m_lua_state = std::make_shared<sol::state>();
         m_luaGDb = std::make_shared<LuaGDb>();
         m_luaGDb->RegisterGDbToLua();
         m_luaGDb->GetLuaState()->script_file("../src/script/db.lua");
+        sol::function lua_init = (*(m_luaGDb->GetLuaState()))["init"];
+        lua_init();
         m_luaGDb->GetLuaState()->set("send", [this](std::string context){
             do_write(context);
         });
@@ -81,22 +82,19 @@ private:
     {
         while (true)
 	    {
-		    NetHead Head;
+		    GMsgHead Head;
 		    if (consumable() < sizeof(Head))
 		    {
-                std::cout << "consumable() < sizeof(Head)" << std::endl;
 			    break;
 		    }
 
 		    Head.len = *((uint32_t*)consume_pos());
-            std::cout << "Client Msg Length :" << std::to_string(Head.len) << std::endl;
 		    //Head.len = htonl(Head.len);
 
 		    if (Head.len > kMaxSize)
 		    {
 			    //LOG_ERROR("read_size_ overflow");
 			    close();
-                std::cout << "read_size_ overflow :" << std::endl;
 			    break;
 		    }
 
@@ -104,7 +102,6 @@ private:
 		    {
 			    //LOG_ERROR("incorrect body size");
 			    close();
-                std::cout << "incorrect body size :" << std::endl;
 			    break;
 		    }
 
@@ -133,22 +130,20 @@ private:
 private:
     tcp::socket socket_;
     std::shared_ptr<LuaGDb> m_luaGDb;
-    char *read_buf_;
+    char* read_buf_;
 	uint32_t kMaxSize = 64 * 1024;
-    //char read_buf_[64 * 1024];
 
 	std::size_t produce_pos_;
 	std::size_t consume_pos_;
 
-	char *consume_pos(){ std::cout << "consume_pos :" << std::to_string(consume_pos_) << std::endl; return read_buf_ + consume_pos_; }
-	char *produce_pos(){ std::cout << "produce_pos :" << std::to_string(produce_pos_) << std::endl; return read_buf_ + produce_pos_; }
-	std::size_t consumable(){ std::cout << "consumable :" << std::to_string(produce_pos_ - consume_pos_) << std::endl; return produce_pos_ - consume_pos_; }
-	std::size_t producible(){ std::cout << "producible :" << std::to_string(kMaxSize - produce_pos_) << std::endl; return kMaxSize - produce_pos_; }
+	char* consume_pos(){ return read_buf_ + consume_pos_; }
+	char* produce_pos(){ return read_buf_ + produce_pos_; }
+	std::size_t consumable(){ return produce_pos_ - consume_pos_; }
+	std::size_t producible(){ return kMaxSize - produce_pos_; }
 	bool produce_end(){ return produce_pos_ == kMaxSize; }
+
 	void rearrange_read_buf()
     {
-        std::cout << "rearrange_read_buf :" << std::endl;
-
         std::size_t cur_size = consumable();
 	    memcpy(read_buf_, consume_pos(), cur_size);
 	    consume_pos_ = 0;
@@ -159,6 +154,4 @@ private:
     {
         socket_.close();
     }
-
-    std::shared_ptr<sol::state> m_lua_state;
 };

@@ -2,22 +2,7 @@ package.path = package.path..';../src/script/?.lua'
 
 require "transpb"
 
---[[
-    transpb:load_file(file)        -- 加载proto
-    transpb:load(str)              -- 加载文本消息
-    transpb:find_message(message)  -- 是否有该消息定义
-    transpb:encode(message, data)  -- 根据消息定义，序列化table
-    transpb:decode(message, bytes) -- 根据消息定义，反序列话bytes
-    head:pack({ length = 0 , type_flag = 0, control_flag = 0, magic_flag   = 0, reflect_flag = 0, reserve_flag = 0, extend_flag  = 0 }) --根据包头结构生成GMsgHead
-    head:unpack(headStr)           --根据包头str,返回包头的table结构
---]]
-
-print("Lua Start")
-
 local handler_table = {}
-
---local index = lua_index
---local recv_data = lua_recv_data
 
 function init()
     transpb:load_file("test.proto")
@@ -73,10 +58,6 @@ function cbCreateRoleReq(real_data)
 
     send("Send MSG to Client")
 end
-
-
-
-init()
 
 
 -- 生成包头

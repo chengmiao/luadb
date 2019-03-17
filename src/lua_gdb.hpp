@@ -1,3 +1,5 @@
+#pragma once
+
 #include "sol.hpp"
 #include "gdb.hpp"
 
@@ -14,7 +16,6 @@ public:
 
     ~LuaGDb()
     {
-        std::cout << "Delete LuaGDb !!!" << std::endl;
     }
 
     void RegisterGDbToLua()

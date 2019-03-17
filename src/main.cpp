@@ -50,18 +50,12 @@ int main(int argc, char* argv[])
             return 1; 
         }
 
-        if (argc == 3)
-        {
-            setDeamon();
-        }
-
+        //setDeamon();
+        
         // init mysql pool
         MysqlPool::Instance()->init();
 
         // init listen server
-        //asio::io_context io_context;
-        //Server s(io_context, std::atoi(argv[1]));
-        //io_context.run();
         ServerMgr::Instance()->init(std::atoi(argv[1]));
     }
     catch (std::exception& e)
